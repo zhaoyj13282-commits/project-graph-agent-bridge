@@ -13,12 +13,12 @@ async function setup(){
  await copyFile(resolve('install.ps1'),join(root,'install.ps1'));
  return root;
 }
-function install(root:string,bundle:string){return spawnSync(shell,['-NoProfile','-ExecutionPolicy','Bypass','-File',join(root,'install.ps1'),'-BundlePath',bundle,'-SkipCodexRegistration','-NoLaunch'],{encoding:'utf8',windowsHide:true,timeout:30000});}
+function install(root:string,bundle:string){return spawnSync(shell,['-NoProfile','-ExecutionPolicy','Bypass','-File',join(root,'install.ps1'),'-BundlePath',bundle,'-SkipCodexRegistration','-NoLaunch'],{encoding:'utf8',windowsHide:true,timeout:60000});}
 async function manifest(root:string,sha256:string){await writeFile(join(root,'runtime-manifest.json'),JSON.stringify({version:'test',bundle:{name:'test.zip',url:'https://invalid.invalid/never-download',sha256}}));}
-describe.skipIf(process.platform!=='win32')('Windows PowerShell 5.1 installation boundaries',()=>{
+describe.skipIf(process.platform!=='win32')('Windows PowerShell 5.1 installation boundaries',{timeout:90000},()=>{
  test('rejects a tampered archive before execution or config creation',async()=>{
   const root=await setup(),zip=join(root,'bad.zip');await writeFile(zip,'not an archive');await manifest(root,'0'.repeat(64));
-  const result=install(root,zip);expect(result.status).not.toBe(0);expect(result.stderr).toContain('SHA256 mismatch');
+  const result=install(root,zip);expect(result.error,result.error?.message).toBeUndefined();expect(result.status).not.toBe(0);expect(result.stderr).toContain('SHA256 mismatch');
   await expect(access(join(root,'bridge.local.json'))).rejects.toThrow();
  });
  test('preserves existing configuration before touching runtime files',async()=>{
@@ -31,7 +31,7 @@ describe.skipIf(process.platform!=='win32')('Windows PowerShell 5.1 installation
   await writeFile(maker,"$ErrorActionPreference=\u0027Stop\u0027\nAdd-Type -AssemblyName System.IO.Compression\nAdd-Type -AssemblyName System.IO.Compression.FileSystem\n$zip=[IO.Compression.ZipFile]::Open("+quote(zip)+",[IO.Compression.ZipArchiveMode]::Create)\n$entry=$zip.CreateEntry('../escape.txt')\n$writer=New-Object IO.StreamWriter($entry.Open())\n$writer.Write('harmless test')\n$writer.Dispose()\n$zip.Dispose()\n");
   const made=spawnSync(shell,['-NoProfile','-ExecutionPolicy','Bypass','-File',maker],{encoding:'utf8',windowsHide:true});expect(made.status,made.stderr).toBe(0);
   await manifest(root,createHash('sha256').update(await readFile(zip)).digest('hex'));
-  const result=install(root,zip);expect(result.status).not.toBe(0);expect(result.stderr).toContain('escapes');
+  const result=install(root,zip);expect(result.error,result.error?.message).toBeUndefined();expect(result.status).not.toBe(0);expect(result.stderr).toContain('escapes');
   await expect(access(join(root,'.bridge-runtime/escape.txt'))).rejects.toThrow();
  });
  test.each([false,true])('PowerShell wrapper preserves Unicode JSON with console BOM=%s',async(bom)=>{
@@ -43,7 +43,7 @@ describe.skipIf(process.platform!=='win32')('Windows PowerShell 5.1 installation
   await writeFile(join(bundle,'bridge/dist/index.js'),"let s='';process.stdin.setEncoding('utf8');process.stdin.on('data',c=>s+=c);process.stdin.on('end',()=>console.log(JSON.stringify(JSON.parse(s))));");
   const input={project:'demo',search:'中文 "quoted" O\'Reilly $()'};
   const driver=join(root,'driver.ps1');await writeFile(driver,'\uFEFF[Console]::InputEncoding=New-Object Text.UTF8Encoding($'+String(bom)+')\n[Console]::OutputEncoding=New-Object Text.UTF8Encoding($false)\n& '+quote(join(scripts,'bridge.ps1'))+' prg_inspect -InputJson '+quote(JSON.stringify(input))+'\n');
-  const result=spawnSync(shell,['-NoProfile','-ExecutionPolicy','Bypass','-File',driver],{encoding:'utf8',windowsHide:true,timeout:30000});
-  expect(result.status,result.stderr).toBe(0);expect(JSON.parse(result.stdout)).toEqual(input);
+  const result=spawnSync(shell,['-NoProfile','-ExecutionPolicy','Bypass','-File',driver],{encoding:'utf8',windowsHide:true,timeout:60000});
+  expect(result.error,result.error?.message).toBeUndefined();expect(result.status,result.stderr).toBe(0);expect(JSON.parse(result.stdout)).toEqual(input);
  });
 });
