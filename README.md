@@ -2,7 +2,7 @@
 
 Read and edit Project Graph files from Codex or another local MCP client. The bridge uses the official Project Graph runtime; it does not parse or rewrite the `.prg` format.
 
-**Windows x64 preview.** Includes seven MCP tools and a pinned companion runtime. The stock Project Graph 4.2.3 application alone does not expose the required Tool CLI. See [compatibility](docs/COMPATIBILITY.md).
+**[Windows x64 preview v0.1.1](https://github.com/zhaoyj13282-commits/project-graph-agent-bridge/releases/tag/v0.1.1).** Includes seven MCP tools and a pinned companion runtime. The stock Project Graph 4.2.3 application alone does not expose the required Tool CLI. See [compatibility](docs/COMPATIBILITY.md).
 
 ## Install on another Windows PC
 
