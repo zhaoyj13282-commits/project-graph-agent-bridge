@@ -25,11 +25,16 @@ $info.StandardErrorEncoding = New-Object Text.UTF8Encoding($false)
 $process = New-Object Diagnostics.Process
 $process.StartInfo = $info
 try {
- [void]$process.Start()
+ # .NET Framework uses Console.InputEncoding when constructing StandardInput.
+ # UTF-8 with a BOM would prepend bytes that JSON.parse does not accept.
+ $previousInputEncoding = [Console]::InputEncoding
+ try {
+  [Console]::InputEncoding = New-Object Text.UTF8Encoding($false)
+  [void]$process.Start()
+ } finally { [Console]::InputEncoding = $previousInputEncoding }
  $stdout = $process.StandardOutput.ReadToEndAsync()
  $stderr = $process.StandardError.ReadToEndAsync()
- $bytes = [Text.Encoding]::UTF8.GetBytes($InputJson)
- $process.StandardInput.BaseStream.Write($bytes,0,$bytes.Length)
+ $process.StandardInput.Write($InputJson)
  $process.StandardInput.Close()
  $process.WaitForExit()
  $text = $stdout.GetAwaiter().GetResult()

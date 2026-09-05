@@ -34,7 +34,7 @@ describe.skipIf(process.platform!=='win32')('Windows PowerShell 5.1 installation
   const result=install(root,zip);expect(result.status).not.toBe(0);expect(result.stderr).toContain('escapes');
   await expect(access(join(root,'.bridge-runtime/escape.txt'))).rejects.toThrow();
  });
- test('PowerShell wrapper preserves quoted Unicode JSON over stdin',async()=>{
+ test.each([false,true])('PowerShell wrapper preserves Unicode JSON with console BOM=%s',async(bom)=>{
   const root=await setup(),scripts=join(root,'scripts'),bundle=join(root,'bundle');
   await mkdir(scripts);await mkdir(join(root,'.bridge-runtime'));await mkdir(join(bundle,'bridge/dist'),{recursive:true});
   await copyFile(resolve('scripts/bridge.ps1'),join(scripts,'bridge.ps1'));
@@ -42,7 +42,7 @@ describe.skipIf(process.platform!=='win32')('Windows PowerShell 5.1 installation
   await writeFile(join(root,'.bridge-runtime/active.json'),JSON.stringify({path:bundle}));
   await writeFile(join(bundle,'bridge/dist/index.js'),"let s='';process.stdin.setEncoding('utf8');process.stdin.on('data',c=>s+=c);process.stdin.on('end',()=>console.log(JSON.stringify(JSON.parse(s))));");
   const input={project:'demo',search:'中文 "quoted" O\'Reilly $()'};
-  const driver=join(root,'driver.ps1');await writeFile(driver,'\uFEFF[Console]::OutputEncoding=New-Object Text.UTF8Encoding($false)\n& '+quote(join(scripts,'bridge.ps1'))+' prg_inspect -InputJson '+quote(JSON.stringify(input))+'\n');
+  const driver=join(root,'driver.ps1');await writeFile(driver,'\uFEFF[Console]::InputEncoding=New-Object Text.UTF8Encoding($'+String(bom)+')\n[Console]::OutputEncoding=New-Object Text.UTF8Encoding($false)\n& '+quote(join(scripts,'bridge.ps1'))+' prg_inspect -InputJson '+quote(JSON.stringify(input))+'\n');
   const result=spawnSync(shell,['-NoProfile','-ExecutionPolicy','Bypass','-File',driver],{encoding:'utf8',windowsHide:true,timeout:30000});
   expect(result.status,result.stderr).toBe(0);expect(JSON.parse(result.stdout)).toEqual(input);
  });

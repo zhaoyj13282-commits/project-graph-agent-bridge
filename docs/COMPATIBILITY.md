@@ -19,3 +19,5 @@ The current upstream lacks standalone edge deletion and a save tool. Snapshot fi
 The companion is a community development snapshot packaged with production assets. It uses a separate application identifier, does not replace the stock installation, and is not a signed official Graphif installer. Keep backups before adopting a development runtime for important graphs.
 
 Known pinned-upstream bug: closed graphs with manually sized TextNodes can return TOOL_EXECUTION_FAILED because the closed runtime initializes text measurement too late. Open such graphs in the companion desktop first; the learning-map example documents this limitation.
+
+Use repository source v0.1.1 or newer. v0.1.0's PowerShell wrapper could prepend a BOM on some consoles; v0.1.1 fixes it. The same v0.1.0 portable runtime ZIP is pinned by both versions.
