@@ -1,0 +1,15 @@
+{
+  "name": "@graphif/project-graph-cli-runtime",
+  "private": true,
+  "version": "1.0.0-bridge.1d36fbb",
+  "type": "module",
+  "files": [
+    "package.json"
+  ],
+  "dependencies": {
+    "jsdom": "29.1.1",
+    "sharp": "0.35.3"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {}
+}

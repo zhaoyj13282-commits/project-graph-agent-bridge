@@ -1,0 +1,156 @@
+# Learning map outline
+
+Generated from the official runtime snapshot of the public PRG.
+
+- 从原理到实现
+  - 计算机领域知识技能学习图谱
+    - 学习方法｜Learn by Building
+      - 参考仓库｜github.com/codecrafters-io/build-your-own-x
+      - 读原理｜先理解模型、接口与约束
+      - 亲手实现｜从最小可运行版本开始
+      - 测试边界｜正确性、性能与故障场景
+      - 解释权衡｜能说清为什么这样设计
+      - 复盘迁移｜把经验迁移到真实系统
+    - 基础能力｜Programming Foundations
+      - 编程语言基本功
+        - 语法、类型与控制流
+        - 函数式、面向对象与泛型
+        - 模块、包与依赖管理
+        - 内存模型、错误处理与并发
+        - BYOX 实作｜Command-Line Tool
+      - 数据结构与算法
+        - 数组、链表、栈、队列与哈希表
+        - 树、堆、图与并查集
+        - 排序、搜索、动态规划与图算法
+        - 复杂度、缓存局部性与取舍
+        - BYOX 实作｜Regex Engine
+        - BYOX 实作｜Search Engine
+      - 数学与逻辑
+        - 离散数学、集合、关系与图论
+        - 概率统计与信息论
+        - 线性代数与微积分
+        - 布尔逻辑、证明与不变量
+    - 计算机体系结构｜Hardware to Machine Code
+      - 数字逻辑
+        - 布尔代数、门电路与状态机
+        - 组合逻辑、时序逻辑与流水线
+        - BYOX 实作｜Processor / RISC-V CPU
+      - 指令系统与汇编
+        - ISA、寄存器、调用约定与 ABI
+        - 汇编、链接、装载与可执行文件
+      - 存储层次
+        - Cache、RAM、磁盘与局部性
+        - 地址空间、栈、堆与对象布局
+        - BYOX 实作｜Memory Allocator
+      - 机器抽象
+        - 中断、系统调用与设备 I/O
+        - BYOX 实作｜Emulator / Virtual Machine
+    - 系统软件｜Systems Programming
+      - 操作系统
+        - 进程、线程与调度
+        - 并发、同步、死锁与原子性
+        - 虚拟内存、分页与内存保护
+        - 文件系统、I/O 与设备驱动
+        - BYOX 实作｜Operating System
+      - 命令解释与工具链
+        - 终端、管道、重定向与作业控制
+        - BYOX 实作｜Shell
+      - 语言实现
+        - 词法分析、语法分析与 AST
+        - 解释器、编译器、字节码与 GC
+        - BYOX 实作｜Programming Language
+      - 开发基础设施
+        - 内容寻址、对象存储与版本图
+        - BYOX 实作｜Git
+        - Namespace、Cgroup 与镜像分层
+        - BYOX 实作｜Docker / Container
+        - BYOX 实作｜Text Editor
+    - 网络、安全与分布式｜Connected Systems
+      - 网络基础
+        - 分层、封装、路由、DNS 与 NAT
+        - TCP、UDP、HTTP、TLS 与 WebSocket
+        - BYOX 实作｜Network Stack
+        - BYOX 实作｜Web Server
+      - 对等网络
+        - 分块、校验、Tracker 与 DHT
+        - BYOX 实作｜BitTorrent Client
+      - 分布式系统
+        - 复制、分片、一致性与共识
+        - 时钟、消息、重试与幂等
+        - 队列、流处理与可观测性
+        - BYOX 实作｜Distributed Systems / Kafka-like
+      - 密码学与安全工程
+        - 哈希、签名、密钥交换与 PKI
+        - 身份认证、授权与最小权限
+        - 威胁建模、输入验证与供应链安全
+        - BYOX 实作｜Blockchain / Cryptocurrency
+    - 数据系统与人工智能｜Data to Intelligence
+      - 数据库
+        - 存储引擎、页、日志与恢复
+        - B+Tree、LSM Tree 与索引
+        - 查询解析、优化与执行
+        - 事务、隔离级别与 MVCC
+        - BYOX 实作｜Database / Redis / SQL Engine
+      - 机器学习基础
+        - 数据、特征、损失函数与泛化
+        - 优化、评估、过拟合与数据泄漏
+      - 神经网络
+        - 张量、自动微分与反向传播
+        - CNN、RNN、Attention 与 Transformer
+        - BYOX 实作｜Neural Network / Tiny Autograd
+      - 现代 AI 系统
+        - Tokenizer、Embedding 与语言模型
+        - RAG、向量检索与评测
+        - 扩散模型与生成式视觉
+        - BYOX 实作｜AI Model / LLM / RAG / Diffusion
+        - BYOX 实作｜Visual Recognition System
+    - Web 与应用开发｜User-facing Systems
+      - Web 平台基础
+        - HTML、CSS、JavaScript 与 DOM
+        - URL、HTTP、Cookie、缓存与 CORS
+        - BYOX 实作｜Web Browser
+      - 前端架构
+        - 组件、状态、响应式与事件系统
+        - Virtual DOM、协调与渲染
+        - BYOX 实作｜Front-end Framework / Library
+        - BYOX 实作｜Template Engine
+      - 服务端应用
+        - API、认证、会话与后台任务
+        - 缓存、限流、队列与数据库集成
+        - BYOX 实作｜Bot
+    - 图形、游戏与空间计算｜Interactive Computing
+      - 计算机图形学
+        - 向量、矩阵、变换与相机
+        - 光栅化、光线追踪、着色与材质
+        - BYOX 实作｜3D Renderer
+      - 物理与仿真
+        - 刚体、碰撞检测、约束与积分
+        - BYOX 实作｜Physics Engine
+      - 游戏工程
+        - 游戏循环、输入、资源与 ECS
+        - BYOX 实作｜Game / Game Engine
+        - BYOX 实作｜Voxel Engine
+      - 空间交互
+        - 视觉跟踪、姿态估计与坐标变换
+        - BYOX 实作｜Augmented Reality
+    - 工程化能力｜Build Reliable Software
+      - 测试与调试
+        - 单元、集成、端到端与属性测试
+        - 日志、断点、剖析、追踪与根因分析
+      - 设计与架构
+        - 模块边界、接口、状态与数据流
+        - API 设计、兼容性与演进
+        - 简单性、可维护性与技术债
+      - 性能与可靠性
+        - 基准测试、复杂度与性能分析
+        - 超时、重试、背压、降级与恢复
+        - SLI、SLO、监控与告警
+      - 交付与协作
+        - Git 工作流、代码评审与文档
+        - CI/CD、制品、部署与回滚
+        - 开源协作、许可证与供应链
+      - 毕业项目｜Capstone
+        - 路线 A｜CPU → VM → 编程语言 → OS
+        - 路线 B｜网络栈 → Web Server → Database → 分布式系统
+        - 路线 C｜浏览器 → 前端框架 → 搜索引擎 → AI 助手
+        - 路线 D｜Renderer → Physics Engine → Game → AR

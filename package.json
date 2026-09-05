@@ -1,0 +1,36 @@
+{
+  "name": "project-graph-agent-bridge",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "packageManager": "pnpm@11.19.0",
+  "bin": {
+    "project-graph-agent-bridge": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "pnpm build && vitest run tests/cli tests/graph tests/mcp tests/setup",
+    "test:integration": "vitest run tests/integration --no-file-parallelism",
+    "probe": "node dist/index.js probe"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@playwright/cli": "0.1.19",
+    "@types/node": "^20.19.0",
+    "typescript": "^5.9.3",
+    "vitest": "3.2.7"
+  },
+  "license": "GPL-3.0-only",
+  "description": "A local MCP bridge for reading and editing Project Graph files through the official runtime.",
+  "repository": {
+    "url": "https://github.com/zhaoyj13282-commits/project-graph-agent-bridge.git",
+    "type": "git"
+  }
+}

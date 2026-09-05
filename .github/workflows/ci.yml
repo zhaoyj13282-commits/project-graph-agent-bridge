@@ -1,0 +1,41 @@
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  release:
+    types: [published]
+permissions:
+  contents: read
+jobs:
+  unit:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - name: Install pinned package manager
+        run: npm install --global pnpm@11.19.0
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm test
+  windows-bundle:
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Install published portable payload with Windows PowerShell 5.1
+        shell: powershell
+        run: ./install.ps1 -SkipCodexRegistration -NoLaunch
+      - name: Inspect public graph and verify closed-project behavior
+        shell: powershell
+        run: |
+          $OutputEncoding = New-Object System.Text.UTF8Encoding($false)
+          $result = ./scripts/bridge.ps1 prg_inspect -InputJson '{"project":"demo","scope":"all"}' | ConvertFrom-Json
+          if ($result.total -ne 5) { throw 'Public fixture must have exactly five objects.' }
+          $texts = @($result.objects | Where-Object type -eq TextNode | ForEach-Object text | Sort-Object)
+          if (($texts -join ',') -ne 'Act,Observe,Plan') { throw 'Unexpected public fixture contents.' }

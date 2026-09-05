@@ -1,0 +1,7 @@
+{
+  "cli": {"executable":"C:/path/to/node-26/node.exe","prefixArgs":["D:/official-cli/project-graph.mjs"],"timeoutMs":60000},
+  "allowedRoots":["D:/graphs"],
+  "projects": {
+    "example":{"path":"D:/graphs/example.prg","name":"Example","permissions":{"read":true,"write":false,"destructive":false}}
+  }
+}

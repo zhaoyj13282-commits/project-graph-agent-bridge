@@ -1,0 +1,11 @@
+{
+  "version": "v0.1.0",
+  "platform": "win32-x64",
+  "nodeVersion": "26.8.1",
+  "upstreamCommit": "1d36fbbe7a1a14bee0f4b79189597cae6cd848a7",
+  "bundle": {
+    "name": "project-graph-agent-bridge-v0.1.0-windows-x64.zip",
+    "url": "https://github.com/zhaoyj13282-commits/project-graph-agent-bridge/releases/download/v0.1.0/project-graph-agent-bridge-v0.1.0-windows-x64.zip",
+    "sha256": "1d2f3a4fbe845518ad4d42eae23d534dd1e92145b79107e6f0d9caeb972e68f2"
+  }
+}
